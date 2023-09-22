@@ -71,7 +71,7 @@ const { sequelize } = require('./models/db');
         })        
     })
 
-    app.get('/edit/:id', (req,res) => {
+    app.get('/edit/:id', (req,res) => {        
         const id = req.params.id
         Post.findByPk(id).then((result) => {
             res.render('edit', {row: result})
@@ -81,6 +81,7 @@ const { sequelize } = require('./models/db');
     })
 
     app.post('/edit/:id', (req, res) => {
+        const msgEdit = encodeURIComponent('Postagem editada com sucesso.')
         const { id } = req.params
         const { titulo, conteudo } = req.body
         const updateData = {
@@ -92,7 +93,7 @@ const { sequelize } = require('./models/db');
         }     
 
         Post.update(updateData, options).then(() => {
-            res.redirect('/')
+            res.redirect(`/?mensagem=${msgEdit}`)
         }).catch((err) => {
             console.log('Aconteceu o seguinte erro: ' + err)
         })
