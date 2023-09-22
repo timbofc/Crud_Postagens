@@ -1,0 +1,19 @@
+<div class="container" style="margin-top: 10px;">
+    <a href="/"><button class="btn btn-warning">Voltar</button></a>        
+</div>
+<div class="container">    
+    <div style="margin-left: 40%;">        
+        <h2>Edição de Posts</h2>
+        <form action="/edit/{{row.id}}" method="POST">
+            <p><strong>Título: </strong><br>
+            <input type="text" value="{{row.titulo}}" name="titulo" style="width: 300px;">
+            </p>
+                                     
+            <p><strong>Conteúdo: </strong><br>
+            <textarea type="text" value="{{row.conteudo}}" name="conteudo" style="width: 300px; height: 100px">{{row.conteudo}}</textarea>            
+            </p>           
+            
+            <button type="submit" class="btn btn-success">Salvar</button>
+        </form>
+    </div>    
+</div>

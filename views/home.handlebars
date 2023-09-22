@@ -1,0 +1,117 @@
+
+<nav class="navbar bg-primary">
+    <div class="container-fluid">     
+        <a class="navbar-brand text-white" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" fill="currentColor" class="bi bi-gem" viewBox="0 0 16 16">
+          <path d="M3.1.7a.5.5 0 0 1 .4-.2h9a.5.5 0 0 1 .4.2l2.976 3.974c.149.185.156.45.01.644L8.4 15.3a.5.5 0 0 1-.8 0L.1 5.3a.5.5 0 0 1 0-.6l3-4zm11.386 3.785-1.806-2.41-.776 2.413 2.582-.003zm-3.633.004.961-2.989H4.186l.963 2.995 5.704-.006zM5.47 5.495 8 13.366l2.532-7.876-5.062.005zm-1.371-.999-.78-2.422-1.818 2.425 2.598-.003zM1.499 5.5l5.113 6.817-2.192-6.82L1.5 5.5zm7.889 6.817 5.123-6.83-2.928.002-2.195 6.828z"/>
+        </svg>        
+        <strong>SISTEMA DE POSTAGENS</strong>
+        </a>        
+    </div>
+</nav>
+
+{{!-- Criação de mensagem de confirmação de exclusão de item. Apenas aparecerá se existir uma mensagem específica na URL --}}
+{{#if msgConfirmacao}}
+<div class="alert alert-success d-flex align-items-center" role="alert">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+  </svg>  
+  <div>    
+    {{msgConfirmacao}}
+  </div>
+</div>
+{{/if}}
+
+{{!-- {{#if msgCadastro}}
+<div class="alert alert-success d-flex align-items-center" role="alert">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+  </svg>  
+  <div>    
+    {{msgCadastro}}
+  </div>
+</div>
+{{/if}} --}}
+
+<!-- Criação de um container para centralizar as informações: -->
+<div class="container-lg">
+  <div class="row">
+    <!-- O aside fixo na lateral esquerda -->
+    <aside class="col-2 bg-light p-3">
+      <div class="list-group">
+        <!-- Botões de menus elencados aqui -->
+        <a href="/"><button class="btn btn-outline-dark" style="width: 100%; text-align:left; margin-top: 5px;"><i class="fa-solid fa-pen-to-square"></i> Home</button></a>        
+        <a href="/cad"><button class="btn btn-outline-dark" style="width: 100%; text-align:left; margin-top: 5px;"><i class="fa-solid fa-pen-to-square"></i> Novo Post</button></a>        
+      </div>
+    </aside>
+
+    <!-- O conteúdo principal no meio da tela -->
+    <main class="col-9">      
+        <div class="container">
+            <h1>Lista de Postagens</h1>            
+            <hr>
+            {{#if posts}}            
+              {{#each posts}}
+                  <div class="bg-secondary bg-opacity-25">
+                      <h3>{{titulo}}</h3>
+                      <p>{{conteudo}}</p>                      
+                      <small>(Postado em {{formatDate createdAt}})</small>
+                      {{!-- <p id="data-exemplo">{{createdAt}}</p>                       --}}
+                      <div style="text-align: end; margin-right: 10px;">
+                          <a href="/edit/{{id}}"><button class="btn btn-warning">Editar</button></a>
+                          <a href="#"><button id="confirmarExclusao" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="exibirConfirmacao({{id}})">Deletar</button></a> 
+                          
+                          {{!-- Modal da tela de delete --}}
+                          <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h1 class="modal-title fs-5" id="staticBackdropLabel">Deseja realmente excluir este post?</h1>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body" style="text-align: left;">
+                                  <p>Esta ação não poderá ser desfeita.</p>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                                  <button id="excluirPost" type="button" class="btn btn-primary" onclick="confirmarExclusao()">Confirmar</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>                        
+                      </div>                                        
+                      <hr>
+                  </div>
+              {{/each}}
+            {{else}}
+              <p>Você ainda não possui nenhuma postagem cadastrada.</p>              
+            {{/if}}
+        </div>
+      </main>    
+  </div>
+</div>
+
+<script>
+  let deleteItemId;
+
+  //Função para coletar o id do item a ser excluído
+  function exibirConfirmacao(itemId){
+    deleteItemId = itemId
+    const confirmacaoModalButton = document.getElementById('confirmarExclusao')
+    confirmacaoModalButton.addEventListener('click', () => {
+      location.href = deleteLink
+    })
+  }
+  
+  //Função para confirmar a exclusão do item selecionado
+  function confirmarExclusao(){
+    const deleteLink = '/delete/' + deleteItemId;        
+    location.href = deleteLink      
+  } 
+
+
+</script>
+
+
+    
+ 

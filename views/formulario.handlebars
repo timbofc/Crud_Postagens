@@ -1,0 +1,19 @@
+<div class="container" style="margin-top: 10px;">
+    <a href="/"><button class="btn btn-warning">Voltar</button></a>    
+</div>
+<div class="container">
+    <div style="margin-left: 40%;">    
+        <h2>Cadastrar Novo Post</h2>
+        <form action="/add" method="POST" class="container">
+            <p><strong>Título: </strong><br>
+            <input type="text" name="titulo" style="width: 300px;" required>
+            </p>        
+
+            <p><strong>Conteúdo: </strong><br>
+            <textarea name="conteudo" style="width: 300px; height: 100px" required></textarea>
+            </p>
+
+            <button type="submit" class="btn btn-success">Cadastrar Postagem</button>
+        </form>
+    </div>
+</div>
